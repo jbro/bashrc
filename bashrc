@@ -241,9 +241,9 @@ function __prompt_cmd
 
   # Seassonal prompts
   local md=$(date +%m%d)
-  if [ "$md" -ge 1201 ] && [ "$md" -ge 1223 ]; then
+  if [ "$md" -ge 1201 ] && [ "$md" -lt 1223 ]; then
     sprompt='🎄'
-    fprompt='☃️'
+    fprompt='☃️ '
   fi
   if [ "$md" -eq 1224 ]; then
     sprompt='🎅🏻'
