@@ -1,6 +1,9 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
 
+# This file is not really relevant in non interactive shells
+if [ -n "$PS1" ]; then
+
 # Enable bash_completion
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
@@ -277,4 +280,4 @@ if command -v fortune &> /dev/null; then
   fortune -e -s
   printf '\033[0m'
 fi
-
+fi
