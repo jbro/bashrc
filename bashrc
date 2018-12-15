@@ -1,6 +1,9 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
 
+# This file is not really relevant in non interactive shells
+if [ -n "$PS1" ]; then
+
 # Enable bash_completion
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
@@ -154,6 +157,7 @@ fi
 if [ -s ~/.rvm/scripts/rvm ]; then
   source ~/.rvm/scripts/rvm
   source ~/.rvm/scripts/completion
+  export PATH="$PATH:$HOME/.rvm/bin"
 fi
 
 # Setup nvm
@@ -239,7 +243,32 @@ function __prompt_cmd
     PS1+="\\n"
   fi
 
-  PS1+="${status_color}╰${normal} λ "
+  # Default prompts
+  local sprompt='λ'
+  local fprompt='λ'
+
+  # Seassonal prompts
+  local md=$(date +%m%d)
+  if [ "$md" -ge 1201 ] && [ "$md" -lt 1223 ]; then
+    sprompt='🎄'
+    fprompt='☃️ '
+  fi
+  if [ "$md" -eq 1224 ]; then
+    sprompt='🎅🏻'
+    fprompt='🎁'
+  fi
+  if [ "$md" -eq 0704 ]; then
+    sprompt='🇺🇸 '
+    fprompt='🎇'
+  fi
+
+  if [ $exit_status != 0 ]; then
+    prompt="${fprompt}"
+  else
+    prompt="${sprompt}"
+  fi
+
+  PS1+="${status_color}╰${normal} ${prompt} "
 
   # Save history continuously
   history -a
@@ -256,4 +285,4 @@ if command -v fortune &> /dev/null; then
   fortune -e -s
   printf '\033[0m'
 fi
-
+fi
