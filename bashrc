@@ -156,6 +156,11 @@ if [ -s ~/.rvm/scripts/rvm ]; then
   source ~/.rvm/scripts/completion
 fi
 
+# Setup nvm
+if [ -s /usr/share/nvm/init-nvm.sh ]; then
+  source /usr/share/nvm/init-nvm.sh
+fi
+
 # Prompt
 function __prompt_cmd
 {
