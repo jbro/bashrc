@@ -58,6 +58,10 @@ else
   alias ls='ls -G'
 fi
 
+if command -v exa &> /dev/null; then
+  alias ls=exa
+fi
+
 # Single window gvim
 if command -v gvim &> /dev/null; then
   alias gvim='gvim --remote-silent'
