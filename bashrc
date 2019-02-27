@@ -207,12 +207,9 @@ function __prompt_cmd
   # git based on https://github.com/jimeh/git-aware-prompt/
   local branch
   if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
+    git fetch &>/dev/null
     if [ "$branch" = "HEAD" ]; then
       branch='detached*'
-    else
-      if [ "$(git rev-parse "$branch")" != "$(git rev-parse "origin/$branch")" ]; then
-        let_line+="!"
-      fi
     fi
     let_line+="${yellow}${branch}"
     # shellcheck disable=SC2155
@@ -221,10 +218,11 @@ function __prompt_cmd
       let_line+="^"
     fi
     # shellcheck disable=SC2155
-    local status=$(git status --porcelain 2> /dev/null)
-    if [ -n "$status" ]; then
+    local status=$(git status --porcelain -b --ahead-behind 2> /dev/null)
+    if [ "$(wc -l <<< "$status")" -gt 1 ]; then
       let_line+="*"
     fi
+    let_line+=" $(head -n1 <<< "$status" | cut -d ' ' -f 3-)"
 
     let_line+="$normal "
   fi
