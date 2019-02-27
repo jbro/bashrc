@@ -209,6 +209,10 @@ function __prompt_cmd
   if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
     if [ "$branch" = "HEAD" ]; then
       branch='detached*'
+    else
+      if [ "$(git rev-parse "$branch")" != "$(git rev-parse "origin/$branch")" ]; then
+        let_line+="!"
+      fi
     fi
     let_line+="${yellow}${branch}"
     # shellcheck disable=SC2155
