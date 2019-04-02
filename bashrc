@@ -1,7 +1,12 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
 
-# This file is not really relevant in non interactive shells
+# Place for things like github tokens
+if [ -f ~/.config/bash/tokens ]; then
+  source ~/.config/bash/tokens
+fi
+
+# This part below is not really relevant in non interactive shells
 if [ -n "$PS1" ]; then
 
 # Enable bash_completion
