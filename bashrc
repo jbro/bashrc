@@ -192,7 +192,12 @@ function __prompt_cmd
     status_color="$blue"
   fi
 
-  PS1="${status_color}╭${normal}[$yellow\\D{%T}$normal] \\u@\\h"
+  PS1="${status_color}╭${normal}[$yellow\\D{%T}$normal]"
+  if [ -n "$SSH_CLIENT" ]; then
+    PS1+="$red \\u@\\h (remote)$normal"
+  else
+    PS1+=" \\u@\\h"
+  fi
   PS1+="$blue \\w$normal\\n"
 
   local let_line
