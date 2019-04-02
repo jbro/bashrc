@@ -205,7 +205,6 @@ function __prompt_cmd
   # git based on https://github.com/jimeh/git-aware-prompt/
   local branch
   if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
-    git fetch &>/dev/null
     if [ "$branch" = "HEAD" ]; then
       branch='detached*'
     fi
