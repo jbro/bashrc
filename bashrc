@@ -178,6 +178,7 @@ fi
 function __prompt_cmd
 {
   local exit_status=$?
+  local prompt='λ'
   local blue="\\[\\e[34m\\]"
   local red="\\[\\e[31m\\]"
   local green="\\[\\e[32m\\]"
@@ -252,31 +253,6 @@ function __prompt_cmd
   if [ -n "$let_line" ]; then
     PS1+="${status_color}│$normal $let_line"
     PS1+="\\n"
-  fi
-
-  # Default prompts
-  local sprompt='λ'
-  local fprompt='λ'
-
-  # Seassonal prompts
-  local md=$(date +%m%d)
-  if [ "$md" -ge 1201 ] && [ "$md" -lt 1223 ]; then
-    sprompt='🎄'
-    fprompt='☃️ '
-  fi
-  if [ "$md" -eq 1224 ]; then
-    sprompt='🎅🏻'
-    fprompt='🎁'
-  fi
-  if [ "$md" -eq 0704 ]; then
-    sprompt='🇺🇸 '
-    fprompt='🎇'
-  fi
-
-  if [ $exit_status != 0 ]; then
-    prompt="${fprompt}"
-  else
-    prompt="${sprompt}"
   fi
 
   PS1+="${status_color}╰${normal} ${prompt} "
