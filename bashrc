@@ -67,6 +67,10 @@ if command -v exa &> /dev/null; then
   alias ls=exa
 fi
 
+if command -v xdg-open &> /dev/null; then
+  alias open=xdg-open
+fi
+
 # Single window gvim
 if command -v gvim &> /dev/null; then
   alias gvim='gvim --remote-silent'
