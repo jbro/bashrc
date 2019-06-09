@@ -9,12 +9,6 @@ fi
 # This part below is not really relevant in non interactive shells
 if [ -n "$PS1" ]; then
 
-# Enable bash_completion
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-[ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
-[ -f /etc/bash_completion ] && . /etc/bash_completion
-[ -f /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
-
 if [ "$TERM" = "xterm-kitty" ]; then
   source <(kitty + complete setup bash)
 fi
@@ -182,6 +176,12 @@ fi
 if [ -s ~/.cargo/env ]; then
   source ~/.cargo/env
 fi
+
+# Enable bash_completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+[ -f /etc/bash_completion ] && . /etc/bash_completion
+[ -f /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
 
 # Prompt
 function __prompt_cmd
