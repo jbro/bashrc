@@ -91,13 +91,6 @@ export PATH=$(printf "%s:" ~/local/*/bin):$PATH
 # Allow changing into some dirs directly
 CDPATH=.:~/Projects:~/projects
 
-# Load local bash-completions
-if [ -d ~/local/bash_completion/bash_completion.d/ ]; then
-  for bc in ~/local/bash_completion/bash_completion.d/*; do
-    source "$bc"
-  done
-fi
-
 # Case insensitive tab-completion
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
@@ -182,6 +175,13 @@ fi
 [ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 [ -f /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+
+# Load local bash-completions
+if [ -d ~/local/bash_completion/bash_completion.d/ ]; then
+  for bc in ~/local/bash_completion/bash_completion.d/*; do
+    source "$bc"
+  done
+fi
 
 # Prompt
 function __prompt_cmd
