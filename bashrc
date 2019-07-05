@@ -22,6 +22,11 @@ if command /usr/local/bin/trash &>/dev/null; then
   alias rm=/usr/local/bin/trash
 fi
 
+# Helper for cleaning persistent SSH connections
+if [ -n "$(command -v fzf)" ]; then
+  alias ssh-kill="ps -x -ocommand | egrep '^ssh:.*\[mux\]' | cut -f 2 -d' ' | fzf | xargs -I\{\} -- ssh -S \{\} -O exit nop"
+fi
+
 # Use gpg-agent for ssh
 test -f ~/.gpg-agent-info && . ~/.gpg-agent-info
 
