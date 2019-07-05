@@ -158,13 +158,6 @@ if [ -n "$GOPATH" ]; then
   export PATH=$PATH:$GOPATH/bin
 fi
 
-# Setup rvm
-if [ -s ~/.rvm/scripts/rvm ]; then
-  source ~/.rvm/scripts/rvm
-  source ~/.rvm/scripts/completion
-  export PATH="$PATH:$HOME/.rvm/bin"
-fi
-
 # Setup nvm
 if [ -s /usr/share/nvm/init-nvm.sh ]; then
   source /usr/share/nvm/init-nvm.sh
@@ -173,6 +166,13 @@ fi
 # Setup rustup
 if [ -s ~/.cargo/env ]; then
   source ~/.cargo/env
+fi
+
+# Setup rvm
+if [ -s ~/.rvm/scripts/rvm ]; then
+  export PATH="$HOME/.rvm/bin:$PATH"
+  source ~/.rvm/scripts/rvm
+  source ~/.rvm/scripts/completion
 fi
 
 # Enable bash_completion
