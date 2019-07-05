@@ -18,8 +18,8 @@ fi
 export VISUAL=vim
 
 # Use the trash can
-if command /usr/local/bin/trash &>/dev/null; then
-  alias rm=/usr/local/bin/trash
+if [ -n "$(command -v trash)" ]; then
+  alias rm=trash
 fi
 
 # Helper for cleaning persistent SSH connections
@@ -31,7 +31,7 @@ fi
 test -f ~/.gpg-agent-info && . ~/.gpg-agent-info
 
 # Colourise commands
-if command grc &>/dev/null; then
+if [ "$(command -v grc)" ]; then
   alias grc="grc -es --colour=auto"
   alias df='grc df'
   alias diff='grc diff'
@@ -62,20 +62,20 @@ else
   alias ls='ls -G'
 fi
 
-if command -v exa &> /dev/null; then
+if [ -n "$(command -v exa)" ]; then
   alias ls=exa
 fi
 
-if command -v xdg-open &> /dev/null; then
+if [ -n "$(command -v xdg-open)" ]; then
   alias open=xdg-open
 fi
 
 # Single window gvim
-if command -v gvim &> /dev/null; then
+if [ -n "$(command -v gvim)" ]; then
   alias gvim='gvim --remote-silent'
 fi
 # Single window mvim
-if command -v mvim &> /dev/null; then
+if [ -n "$(command -v mvim)" ]; then
   alias mvim='mvim --remote-silent'
 fi
 
@@ -244,7 +244,7 @@ function __prompt_cmd
   fi
 
   # RVM
-  if command rvm-prompt &> /dev/null; then
+  if [ -n "$(command -v rvm-prompt)" ]; then
     if [ -n "$(rvm-prompt g)" ]; then
       let_line+="$red$(rvm-prompt)$normal "
     fi
@@ -270,7 +270,7 @@ PROMPT_COMMAND=__prompt_cmd
 # Don't have python virtual environment set prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if command -v fortune &> /dev/null; then
+if [ -n "$(command -v fortune)" ]; then
   printf '\033[0;35m'
   fortune -e -s
   printf '\033[0m'
