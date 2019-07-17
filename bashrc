@@ -70,13 +70,17 @@ if [ -n "$(command -v xdg-open)" ]; then
   alias open=xdg-open
 fi
 
-# Single window gvim
-if [ -n "$(command -v gvim)" ]; then
-  alias gvim='gvim --remote-silent'
-fi
-# Single window mvim
-if [ -n "$(command -v mvim)" ]; then
-  alias mvim='mvim --remote-silent'
+# Single window graphical vim
+_graphical_vim_command=$(command -v gvim || command -v mvim)
+if [ -n "$_graphical_vim_command" ]; then
+gvim() {
+  if [ -z "$(command $_graphical_vim_command --serverlist)" ]; then
+    command $_graphical_vim_command "$@" 
+  else 
+    command $_graphical_vim_command --remote-silent "$@"
+  fi
+}
+alias mvim=gvim
 fi
 
 # Put brew sbin into PATH
