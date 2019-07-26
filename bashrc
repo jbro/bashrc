@@ -9,7 +9,7 @@ fi
 # This part below is not really relevant in non interactive shells
 if [ -n "$PS1" ]; then
 
-if [ "$TERM" = "xterm-kitty" ]; then
+if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSH_CLIENT" ]; then
   source <(kitty + complete setup bash)
 fi
 
