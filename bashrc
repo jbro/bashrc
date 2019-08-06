@@ -23,9 +23,9 @@ if [ -n "$(command -v trash)" ]; then
 fi
 
 # Helper for cleaning persistent SSH connections
-if [ -n "$(command -v fzf)" ]; then
-  alias ssh-kill="ps -x -ocommand | egrep '^ssh:.*\[mux\]' | cut -f 2 -d' ' | fzf | xargs -I\{\} -- ssh -S \{\} -O exit nop"
-  alias ssh-updatekey='grep -oE "^[[a-z0-9.,:-]+" ~/.ssh/known_hosts | tr "," "\n" | fzf | xargs -I% sh -c "ssh-keygen -R % && ssh-keyscan -tecdsa % >> ~/.ssh/known_hosts"'
+if [ -n "$(command -v fzy)" ]; then
+  alias ssh-kill="ps -x -ocommand | egrep '^ssh:.*\[mux\]' | cut -f 2 -d' ' | fzy | xargs -I\{\} -- ssh -S \{\} -O exit nop"
+  alias ssh-updatekey='grep -oE "^[[a-z0-9.,:-]+" ~/.ssh/known_hosts | tr "," "\n" | tr -d '[' | fzy | xargs -I% sh -c "ssh-keygen -R % && ssh-keyscan -tecdsa % >> ~/.ssh/known_hosts"'
 fi
 
 # Use gpg-agent for ssh
