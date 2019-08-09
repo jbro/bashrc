@@ -76,7 +76,7 @@ _graphical_vim_command=$(command -v gvim || command -v mvim)
 if [ -n "$_graphical_vim_command" ]; then
 gvim() {
   if [ -z "$(command $_graphical_vim_command --serverlist)" ]; then
-    command $_graphical_vim_command "$@" 
+    nohub command $_graphical_vim_command "$@" &
   else 
     command $_graphical_vim_command --remote-silent "$@"
   fi
