@@ -185,6 +185,7 @@ fi
 [ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 [ -f /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+[ -f /usr/share/racket/pkgs/shell-completion/racket-completion.bash ] && . /usr/share/racket/pkgs/shell-completion/racket-completion.bash
 
 # Load local bash-completions
 if [ -d ~/local/bash_completion/bash_completion.d/ ]; then
