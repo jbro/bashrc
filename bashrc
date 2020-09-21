@@ -27,7 +27,7 @@ if [ -n "$(command -v fzy)" ]; then
   alias ssh-kill="ps -x -ocommand | egrep '^ssh:.*\[mux\]' | cut -f 2 -d' ' | fzy | xargs -I\{\} -- ssh -S \{\} -O exit nop"
   alias ssh-updatekey='grep -oE "^[[a-z0-9.,:-]+" ~/.ssh/known_hosts | tr "," "\n" | tr -d '[' | fzy | xargs -I% sh -c "ssh-keygen -R % && ssh-keyscan -tecdsa % >> ~/.ssh/known_hosts"'
   fzy_history() {
-      source <(tac "$HISTFILE" | grep -v '^#'| fzy)
+    source <(tac "$HISTFILE" | grep -v '^#'| fzy)
   }
 fi
 
