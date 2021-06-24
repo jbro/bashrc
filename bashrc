@@ -181,6 +181,11 @@ if [ -s ~/.rvm/scripts/rvm ]; then
   source ~/.rvm/scripts/completion
 fi
 
+# Doom emacs
+if [ -f ~/.config/emacs/bin/doom ]; then
+  export PATH="~/.config/emacs/bin:$PATH"
+fi
+
 # Enable bash_completion
 # shellcheck disable=SC1091
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
