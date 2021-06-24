@@ -205,6 +205,22 @@ fi
 # shellcheck disable=SC1091
 [ -f /Users/jbr/.iterm2_shell_integration.bash ] && . /Users/jbr/.iterm2_shell_integration.bash
 
+# Import git prompt function, __git_ps1, distributed with git
+# shellcheck disable=SC1091
+test -f /usr/local/etc/bash_completion.d/git-prompt.sh && source /usr/local/etc/bash_completion.d/git-prompt.sh
+# shellcheck disable=SC1091
+test -f /usr/share/git/completion/git-prompt.sh && source /usr/share/git/completion/git-prompt.sh
+# shellcheck disable=SC2034
+GIT_PS1_SHOWDIRTYSTATE=1
+# shellcheck disable=SC2034
+GIT_PS1_SHOWSTASHSTATE=1
+# shellcheck disable=SC2034
+GIT_PS1_SHOWUNTRACKEDFILES=1
+# shellcheck disable=SC2034
+GIT_PS1_SHOWUPSTREAM="git"
+# shellcheck disable=SC2034
+GIT_PS1_DESCRIBE_STYLE=default
+
 # Prompt
 function __prompt_cmd
 {
@@ -233,27 +249,8 @@ function __prompt_cmd
 
   local let_line
 
-  # git based on https://github.com/jimeh/git-aware-prompt/
-  local branch
-  if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
-    if [ "$branch" = "HEAD" ]; then
-      branch='detached*'
-    fi
-    let_line+="${yellow}${branch}"
-    # shellcheck disable=SC2155
-    local stash=$(git stash list 2>/dev/null)
-    if [ -n "$stash" ]; then
-      let_line+="^"
-    fi
-    # shellcheck disable=SC2155
-    local status=$(git status --porcelain -b --ahead-behind 2> /dev/null)
-    if [ "$(wc -l <<< "$status")" -gt 1 ]; then
-      let_line+="*"
-    fi
-    let_line+=" $(command head -n1 <<< "$status" | cut -d ' ' -f 3-)"
-
-    let_line+="$normal "
-  fi
+  # Git status
+  let_line+="${yellow}$(__git_ps1 "%s")${normal} "
 
   # Python virtualenv
   if [ -n "$VIRTUAL_ENV" ]; then
