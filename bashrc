@@ -250,7 +250,11 @@ function __prompt_cmd
   local let_line
 
   # Git status
-  let_line+="${yellow}$(__git_ps1 "%s")${normal} "
+  local git_status
+  git_status=$(__git_ps1 "%s")
+  if [ -n "$git_status" ]; then
+    let_line+="${yellow}$git_status${normal} "
+  fi
 
   # Python virtualenv
   if [ -n "$VIRTUAL_ENV" ]; then
