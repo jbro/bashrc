@@ -1,8 +1,8 @@
-# shellcheck disable=SC1090
-# shellcheck disable=SC1091
+# shellcheck shell=bash
 
 # Place for things like github tokens
 if [ -f ~/.config/bash/tokens ]; then
+  # shellcheck disable=SC1090
   source ~/.config/bash/tokens
 fi
 
@@ -10,6 +10,7 @@ fi
 if [ -n "$PS1" ]; then
 
 if [ "$TERM" = "xterm-kitty" ] && [ -z "$SSH_CLIENT" ]; then
+  # shellcheck disable=SC1090
   source <(kitty + complete setup bash)
 fi
 
@@ -27,11 +28,13 @@ if [ -n "$(command -v fzy)" ]; then
   alias ssh-kill="ps -x -ocommand | egrep '^ssh:.*\[mux\]' | cut -f 2 -d' ' | fzy | xargs -I\{\} -- ssh -S \{\} -O exit nop"
   alias ssh-updatekey='grep -oE "^[[a-z0-9.,:-]+" ~/.ssh/known_hosts | tr "," "\n" | tr -d '[' | fzy | xargs -I% sh -c "ssh-keygen -R % && ssh-keyscan -tecdsa % >> ~/.ssh/known_hosts"'
   fzy_history() {
+    # shellcheck disable=SC1090
     source <(tac "$HISTFILE" | grep -v '^#'| fzy)
   }
 fi
 
 # Use gpg-agent for ssh
+# shellcheck disable=SC1090
 test -f ~/.gpg-agent-info && . ~/.gpg-agent-info
 
 # Colourise commands
@@ -153,40 +156,54 @@ fi
 if [ -d ~/Private/projects/go ]; then
   export GOPATH=~/Private/projects/go
 fi
-if [ -n "$(command -v go)" ] && [ -d "$(go env GOPATH)/bin" ]; then
-  export PATH=$PATH:"$(go env GOPATH)/bin"
+if [ -n "$(command -v go)" ] && [ -n "$GOPATH" ] && [ -d "$GOPATH/bin" ]; then
+  export PATH=$PATH:"$GOPATH/bin"
 fi
 
 # Setup nvm
 if [ -s /usr/share/nvm/init-nvm.sh ]; then
+  # shellcheck disable=SC1091
   source /usr/share/nvm/init-nvm.sh
 fi
 
 # Setup rustup
 if [ -s ~/.cargo/env ]; then
+  # shellcheck disable=SC1090
   source ~/.cargo/env
 fi
 
 # Setup rvm
 if [ -s ~/.rvm/scripts/rvm ]; then
   export PATH="$HOME/.rvm/bin:$PATH"
+  # shellcheck disable=SC1090
   source ~/.rvm/scripts/rvm
+  # shellcheck disable=SC1090
   source ~/.rvm/scripts/completion
 fi
 
 # Enable bash_completion
+# shellcheck disable=SC1091
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+# shellcheck disable=SC1091
 [ -f /usr/share/bash-completion/bash_completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+# shellcheck disable=SC1091
 [ -f /etc/bash_completion ] && . /etc/bash_completion
+# shellcheck disable=SC1091
 [ -f /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+# shellcheck disable=SC1091
 [ -f /usr/share/racket/pkgs/shell-completion/racket-completion.bash ] && . /usr/share/racket/pkgs/shell-completion/racket-completion.bash
 
 # Load local bash-completions
 if [ -d ~/local/bash_completion/bash_completion.d/ ]; then
   for bc in ~/local/bash_completion/bash_completion.d/*; do
+    # shellcheck disable=SC1090
     source "$bc"
   done
 fi
+
+# Load iterm2 integration
+# shellcheck disable=SC1091
+[ -f /Users/jbr/.iterm2_shell_integration.bash ] && . /Users/jbr/.iterm2_shell_integration.bash
 
 # Prompt
 function __prompt_cmd
@@ -233,7 +250,7 @@ function __prompt_cmd
     if [ "$(wc -l <<< "$status")" -gt 1 ]; then
       let_line+="*"
     fi
-    let_line+=" $(head -n1 <<< "$status" | cut -d ' ' -f 3-)"
+    let_line+=" $(command head -n1 <<< "$status" | cut -d ' ' -f 3-)"
 
     let_line+="$normal "
   fi
